@@ -7,7 +7,7 @@ Welkom bij de Git Workshop! Deze tutorial is ontworpen om je te helpen Git te be
 
 In deze tutorial laten we Git-commando's zien zoals deze:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git --version
@@ -181,7 +181,7 @@ Gestage bestanden zijn bestanden die klaar zijn om te worden gecommit naar de re
 
 Voor nu zijn we klaar met werken aan index.html. Dus we kunnen het toevoegen aan de Staging Environment:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git add index.html
@@ -189,7 +189,7 @@ git add index.html
 
 Het bestand zou nu gestaged moeten zijn. Laten we de status controleren:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git status
@@ -213,7 +213,7 @@ Je kunt ook meer dan één bestand tegelijk stagen. Laten we nog 2 bestanden toe
 
 Een README.md-bestand dat de repository beschrijft (aanbevolen voor alle repositories):
 
-### Voorbeeld
+#### Voorbeeld
 
 ```
 # hello-world
@@ -225,7 +225,7 @@ This repository is built step by step in the tutorial.
 
 Een basis externe stijlblad (bluestyle.css):
 
-### Voorbeeld
+#### Voorbeeld
 
 ```css
 body {
@@ -263,7 +263,7 @@ p {
 
 En update index.html om het stylesheet op te nemen:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```html
 <!DOCTYPE html>
@@ -283,7 +283,7 @@ En update index.html om het stylesheet op te nemen:
 
 Voeg nu alle bestanden in de huidige directory toe aan de Staging Environment:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git add --all
@@ -291,7 +291,7 @@ git add --all
 
 Door `--all` te gebruiken in plaats van individuele bestandsnamen, worden alle wijzigingen (nieuwe, gewijzigde en verwijderde bestanden) gestaged.
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git status
@@ -388,7 +388,7 @@ We werken in onze lokale repository en we willen het hoofdproject niet verstoren
 
 Dus we maken een nieuwe branch aan:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git branch hello-world-images
@@ -398,7 +398,7 @@ Nu hebben we een nieuwe branch genaamd `hello-world-images` aangemaakt.
 
 Laten we bevestigen dat we een nieuwe branch hebben gemaakt:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git branch
@@ -413,7 +413,7 @@ We kunnen de nieuwe branch zien met de naam `hello-world-images`, maar de `*` na
 
 `checkout` is het commando dat wordt gebruikt om een branch uit te checken. Het verplaatst ons van de huidige branch naar de branch die aan het einde van het commando is opgegeven:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git checkout hello-world-images
@@ -429,7 +429,7 @@ Open je favoriete editor en maak wat wijzigingen.
 
 Voor dit voorbeeld hebben we een afbeelding (`img_hello_world.jpg`) toegevoegd aan de werkmap en een regel code in het `index.html` bestand:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```html
 <!DOCTYPE html>
@@ -453,7 +453,7 @@ We hebben wijzigingen aangebracht in een bestand en een nieuw bestand toegevoegd
 
 Controleer nu de status van de huidige branch:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git status
@@ -480,7 +480,7 @@ Laten we eens kijken wat hier gebeurt:
 
 Dus we moeten beide bestanden toevoegen aan de Staging Environment voor deze branch:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git add --all
@@ -490,7 +490,7 @@ Door `--all` te gebruiken in plaats van individuele bestandsnamen, worden alle w
 
 Controleer de status van de branch:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git status
@@ -506,7 +506,7 @@ Changes to be committed:
 
 We zijn tevreden met onze wijzigingen. Dus we zullen ze committen naar de branch:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git commit -m "Added image to Hello World"
@@ -528,7 +528,7 @@ Laten we nu eens kijken hoe snel en gemakkelijk het is om met verschillende bran
 
 We bevinden ons momenteel op de branch `hello-world-images`. We hebben een afbeelding aan deze branch toegevoegd, dus laten we de bestanden in de huidige map opsommen:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 ls
@@ -542,7 +542,7 @@ We kunnen het nieuwe bestand `img_hello_world.jpg` zien, en als we het html-best
 
 Laten we nu eens kijken wat er gebeurt als we teruggaan naar de `master` branch:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git checkout master
@@ -554,7 +554,7 @@ Switched to branch 'master'
 
 De nieuwe afbeelding maakt geen deel uit van deze branch. Lijst de bestanden in de huidige map opnieuw op:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 ls
@@ -576,7 +576,7 @@ Ik wil niet direct in de `master` branch werken, en ik wil `hello-world-images` 
 
 Dus we maken een nieuwe branch om het probleem aan te pakken:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git checkout -b emergency-fix
@@ -590,7 +590,7 @@ Nu hebben we een nieuwe branch van `master` gemaakt en zijn we ernaar overgescha
 
 Laten we onze denkbeeldige fout oplossen:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```html
 <!DOCTYPE html>
@@ -613,7 +613,7 @@ We hebben wijzigingen aangebracht in dit bestand en we moeten die wijzigingen na
 
 Controleer de status:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git status
@@ -631,7 +631,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 Stage het bestand en commit:
 
-### Voorbeeld
+#### Voorbeeld
 
 ```sh
 git add index.html
