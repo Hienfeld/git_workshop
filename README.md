@@ -644,3 +644,238 @@ git commit -m "updated index.html with emergency fix"
 ```
 
 Nu hebben we een oplossing
+
+
+## Git Branch Merge
+
+### Branches Samenvoegen
+
+We hebben de noodfix klaar, dus laten we de `master` en `emergency-fix` branches samenvoegen.
+
+Eerst moeten we overschakelen naar de `master` branch:
+
+#### Voorbeeld
+
+```sh
+git checkout master
+```
+
+```
+Switched to branch 'master'
+```
+
+Nu voegen we de huidige branch (`master`) samen met `emergency-fix`:
+
+#### Voorbeeld
+
+```sh
+git merge emergency-fix
+```
+
+```
+Updating 09f4acd..dfa79db
+Fast-forward
+ index.html | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Omdat de `emergency-fix` branch direct van `master` kwam, en er geen andere wijzigingen waren aangebracht in `master` terwijl we aan het werk waren, ziet Git dit als een voortzetting van `master`. Dus het kan "Fast-forward", waarbij zowel `master` als `emergency-fix` naar dezelfde commit wijzen.
+
+Omdat `master` en `emergency-fix` in wezen hetzelfde zijn nu, kunnen we `emergency-fix` verwijderen, aangezien deze niet langer nodig is:
+
+#### Voorbeeld
+
+```sh
+git branch -d emergency-fix
+```
+
+```
+Deleted branch emergency-fix (was dfa79db).
+```
+
+### Merge Conflict
+
+Nu kunnen we teruggaan naar `hello-world-images` en verder werken. Voeg nog een afbeeldingsbestand toe (`img_hello_git.jpg`) en wijzig `index.html`, zodat het deze weergeeft:
+
+#### Voorbeeld
+
+```sh
+git checkout hello-world-images
+```
+
+```
+Switched to branch 'hello-world-images'
+```
+
+#### Voorbeeld
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello World!</title>
+<link rel="stylesheet" href="bluestyle.css">
+</head>
+<body>
+
+<h1>Hello world!</h1>
+<div><img src="img_hello_world.jpg" alt="Hello World from Space" style="width:100%;max-width:960px"></div>
+<p>This is the first file in my new Git Repo.</p>
+<p>A new line in our file!</p>
+<div><img src="img_hello_git.jpg" alt="Hello Git" style="width:100%;max-width:640px"></div>
+
+</body>
+</html>
+```
+
+Nu zijn we klaar met ons werk hier en kunnen we de wijzigingen stagen en committen voor deze branch:
+
+#### Voorbeeld
+
+```sh
+git add --all
+git commit -m "added new image"
+```
+
+```
+[hello-world-images 1f1584e] added new image
+ 2 files changed, 1 insertion(+)
+ create mode 100644 img_hello_git.jpg
+```
+
+We zien dat `index.html` is gewijzigd in beide branches. Nu zijn we klaar om `hello-world-images` samen te voegen met `master`. Maar wat gebeurt er met de wijzigingen die we onlangs in `master` hebben aangebracht?
+
+#### Voorbeeld
+
+```sh
+git checkout master
+git merge hello-world-images
+```
+
+```
+Auto-merging index.html
+CONFLICT (content): Merge conflict in index.html
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+De merge is mislukt, omdat er een conflict is tussen de versies van `index.html`. Laten we de status controleren:
+
+#### Voorbeeld
+
+```sh
+git status
+```
+
+```
+On branch master
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Changes to be committed:
+        new file:   img_hello_git.jpg
+        new file:   img_hello_world.jpg
+
+Unmerged paths:
+  (use "git add ..." to mark resolution)
+        both modified:   index.html
+```
+
+Dit bevestigt dat er een conflict is in `index.html`, maar de afbeeldingsbestanden zijn klaar en gestaged om te worden gecommit.
+
+Dus we moeten dat conflict oplossen. Open het bestand in onze editor:
+
+#### Voorbeeld
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello World!</title>
+<link rel="stylesheet" href="bluestyle.css">
+</head>
+<body>
+
+<h1>Hello world!</h1>
+<div><img src="img_hello_world.jpg" alt="Hello World from Space" style="width:100%;max-width:960px"></div>
+<p>This is the first file in my new Git Repo.</p>
+<<<<<<< HEAD
+<p>This line is here to show how merging works.</p>
+=======
+<p>A new line in our file!</p>
+<div><img src="img_hello_git.jpg" alt="Hello Git" style="width:100%;max-width:640px"></div>
+>>>>>>> hello-world-images
+
+</body>
+</html>
+```
+
+We kunnen de verschillen tussen de versies zien en deze bewerken zoals we willen:
+
+#### Voorbeeld
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello World!</title>
+<link rel="stylesheet" href="bluestyle.css">
+</head>
+<body>
+
+<h1>Hello world!</h1>
+<div><img src="img_hello_world.jpg" alt="Hello World from Space" style="width:100%;max-width:960px"></div>
+<p>This is the first file in my new Git Repo.</p>
+<p>This line is here to show how merging works.</p>
+<div><img src="img_hello_git.jpg" alt="Hello Git" style="width:100%;max-width:640px"></div>
+
+</body>
+</html>
+```
+
+Nu kunnen we `index.html` stagen en de status controleren:
+
+#### Voorbeeld
+
+```sh
+git add index.html
+git status
+```
+
+```
+On branch master
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+        new file:   img_hello_git.jpg
+        new file:   img_hello_world.jpg
+        modified:   index.html
+```
+
+Het conflict is opgelost en we kunnen `commit` gebruiken om de merge af te ronden:
+
+#### Voorbeeld
+
+```sh
+git commit -m "merged with hello-world-images after fixing conflicts"
+```
+
+```
+[master e0b6038] merged with hello-world-images after fixing conflicts
+```
+
+En verwijder de `hello-world-images` branch:
+
+#### Voorbeeld
+
+```sh
+git branch -d hello-world-images
+```
+
+```
+Deleted branch hello-world-images (was 1f1584e).
+```
+
+Nu heb je een beter begrip van hoe branches en merges werken. Tijd om te beginnen met werken met een externe repository!
+
