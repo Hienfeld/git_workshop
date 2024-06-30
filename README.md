@@ -229,12 +229,35 @@ Een basis externe stijlblad (bluestyle.css):
 
 ```css
 body {
-  background-color: lightblue;
+    background-color: #f0f8ff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
 }
 
 h1 {
-  color: navy;
-  margin-left: 20px;
+    color: #004080;
+    margin-left: 0;
+    font-size: 3em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #666;
+    margin: 20px 0;
+    padding: 0 20px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    max-width: 600px;
+    text-align: center;
 }
 ```
 
@@ -319,4 +342,305 @@ git commit -a -m "Updated index.html with a new line"
  1 file changed, 1 insertion(+)
  ```
 
- 
+
+## Werken met Git Branches
+
+In Git is een branch een nieuwe/afzonderlijke versie van de hoofdrepository.
+
+Stel dat je een groot project hebt en je moet het ontwerp bijwerken.
+
+Hoe zou dat werken zonder en met Git:
+
+### Zonder Git:
+
+- Maak kopieën van alle relevante bestanden om te voorkomen dat de live versie wordt beïnvloed
+- Begin met het werken aan het ontwerp en ontdek dat de code afhankelijk is van code in andere bestanden, die ook moeten worden gewijzigd!
+- Maak ook kopieën van de afhankelijke bestanden. Zorg ervoor dat elke bestandsafhankelijkheid naar de juiste bestandsnaam verwijst
+- NOODGEVAL! Er is een niet-gerelateerd probleem ergens anders in het project dat onmiddellijk moet worden opgelost!
+- Sla al je bestanden op en noteer de namen van de kopieën waar je aan werkte
+- Werk aan het niet-gerelateerde probleem en update de code om het op te lossen
+- Ga terug naar het ontwerp en voltooi het werk daar
+- Kopieer de code of hernoem de bestanden, zodat het bijgewerkte ontwerp op de live versie staat
+- (2 weken later realiseer je je dat het niet-gerelateerde probleem niet is opgelost in de nieuwe ontwerpversie omdat je de bestanden hebt gekopieerd voordat de fix was aangebracht)
+
+### Met Git:
+
+- Maak een nieuwe branch genaamd `new-design` en bewerk de code rechtstreeks zonder de hoofdbranch te beïnvloeden
+- NOODGEVAL! Er is een niet-gerelateerd probleem ergens anders in het project dat onmiddellijk moet worden opgelost!
+- Maak een nieuwe branch van het hoofdproject genaamd `small-error-fix`
+- Los het niet-gerelateerde probleem op en merge de `small-error-fix` branch met de hoofdbranch
+- Ga terug naar de `new-design` branch en voltooi het werk daar
+- Merge de `new-design` branch met de hoofdbranch (en krijg een melding over de kleine foutfix die je miste)
+
+Branches stellen je in staat om aan verschillende delen van een project te werken zonder de hoofdbranch te beïnvloeden.
+
+Wanneer het werk is voltooid, kan een branch worden samengevoegd met het hoofdproject.
+
+Je kunt zelfs schakelen tussen branches en werken aan verschillende projecten zonder dat ze elkaar storen.
+
+Branching in Git is zeer lichtgewicht en snel!
+
+### Nieuwe Git Branch
+
+Laten we enkele nieuwe functies toevoegen aan onze `index.html` pagina.
+
+We werken in onze lokale repository en we willen het hoofdproject niet verstoren of mogelijk beschadigen.
+
+Dus we maken een nieuwe branch aan:
+
+### Voorbeeld
+
+```sh
+git branch hello-world-images
+```
+
+Nu hebben we een nieuwe branch genaamd `hello-world-images` aangemaakt.
+
+Laten we bevestigen dat we een nieuwe branch hebben gemaakt:
+
+### Voorbeeld
+
+```sh
+git branch
+```
+
+```
+  hello-world-images
+* master
+```
+
+We kunnen de nieuwe branch zien met de naam `hello-world-images`, maar de `*` naast `master` geeft aan dat we momenteel op die branch zitten.
+
+`checkout` is het commando dat wordt gebruikt om een branch uit te checken. Het verplaatst ons van de huidige branch naar de branch die aan het einde van het commando is opgegeven:
+
+### Voorbeeld
+
+```sh
+git checkout hello-world-images
+```
+
+```
+Switched to branch 'hello-world-images'
+```
+
+Nu hebben we onze huidige werkruimte verplaatst van de `master` branch naar de nieuwe branch.
+
+Open je favoriete editor en maak wat wijzigingen.
+
+Voor dit voorbeeld hebben we een afbeelding (`img_hello_world.jpg`) toegevoegd aan de werkmap en een regel code in het `index.html` bestand:
+
+### Voorbeeld
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello World!</title>
+<link rel="stylesheet" href="bluestyle.css">
+</head>
+<body>
+
+<h1>Hello world!</h1>
+<div><img src="img_hello_world.jpg" alt="Hello World from Space" style="width:100%;max-width:960px"></div>
+<p>This is the first file in my new Git Repo.</p>
+<p>A new line in our file!</p>
+
+</body>
+</html>
+```
+
+We hebben wijzigingen aangebracht in een bestand en een nieuw bestand toegevoegd in de werkmap (dezelfde map als de hoofdbranch).
+
+Controleer nu de status van de huidige branch:
+
+### Voorbeeld
+
+```sh
+git status
+```
+
+```
+On branch hello-world-images
+Changes not staged for commit:
+  (use "git add ..." to update what will be committed)
+  (use "git restore ..." to discard changes in working directory)
+        modified:   index.html
+
+Untracked files:
+  (use "git add ..." to include in what will be committed)
+        img_hello_world.jpg
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Laten we eens kijken wat hier gebeurt:
+
+- Er zijn wijzigingen in onze `index.html`, maar het bestand is niet gestaged voor commit
+- `img_hello_world.jpg` is niet getrackt
+
+Dus we moeten beide bestanden toevoegen aan de Staging Environment voor deze branch:
+
+### Voorbeeld
+
+```sh
+git add --all
+```
+
+Door `--all` te gebruiken in plaats van individuele bestandsnamen, worden alle wijzigingen (nieuwe, gewijzigde en verwijderde bestanden) gestaged.
+
+Controleer de status van de branch:
+
+### Voorbeeld
+
+```sh
+git status
+```
+
+```
+On branch hello-world-images
+Changes to be committed:
+  (use "git restore --staged ..." to unstage)
+    new file: img_hello_world.jpg
+    modified: index.html
+```
+
+We zijn tevreden met onze wijzigingen. Dus we zullen ze committen naar de branch:
+
+### Voorbeeld
+
+```sh
+git commit -m "Added image to Hello World"
+```
+
+```
+[hello-world-images 0312c55] Added image to Hello World
+ 2 files changed, 1 insertion(+)
+ create mode 100644 img_hello_world.jpg
+```
+
+Nu hebben we een nieuwe branch, die verschilt van de `master` branch.
+
+Opmerking: Het gebruik van de `-b` optie bij `checkout` maakt een nieuwe branch en schakelt ernaar over, als deze nog niet bestaat.
+
+### Wisselen tussen Branches
+
+Laten we nu eens kijken hoe snel en gemakkelijk het is om met verschillende branches te werken en hoe goed het werkt.
+
+We bevinden ons momenteel op de branch `hello-world-images`. We hebben een afbeelding aan deze branch toegevoegd, dus laten we de bestanden in de huidige map opsommen:
+
+### Voorbeeld
+
+```sh
+ls
+```
+
+```
+README.md  bluestyle.css  img_hello_world.jpg  index.html
+```
+
+We kunnen het nieuwe bestand `img_hello_world.jpg` zien, en als we het html-bestand openen, kunnen we zien dat de code is gewijzigd. Alles is zoals het hoort te zijn.
+
+Laten we nu eens kijken wat er gebeurt als we teruggaan naar de `master` branch:
+
+### Voorbeeld
+
+```sh
+git checkout master
+```
+
+```
+Switched to branch 'master'
+```
+
+De nieuwe afbeelding maakt geen deel uit van deze branch. Lijst de bestanden in de huidige map opnieuw op:
+
+### Voorbeeld
+
+```sh
+ls
+```
+
+```
+README.md  bluestyle.css  index.html
+```
+
+`img_hello_world.jpg` is er niet meer! En als we het html-bestand openen, kunnen we zien dat de code is teruggekeerd naar wat het was vóór de wijziging.
+
+Zie je hoe gemakkelijk het is om met branches te werken? En hoe dit je in staat stelt om aan verschillende dingen te werken?
+
+### Noodbranch
+
+Stel nu dat we nog niet klaar zijn met `hello-world-images`, maar we moeten een fout in de `master` branch oplossen.
+
+Ik wil niet direct in de `master` branch werken, en ik wil `hello-world-images` niet verstoren, aangezien het nog niet klaar is.
+
+Dus we maken een nieuwe branch om het probleem aan te pakken:
+
+### Voorbeeld
+
+```sh
+git checkout -b emergency-fix
+```
+
+```
+Switched to a new branch 'emergency-fix'
+```
+
+Nu hebben we een nieuwe branch van `master` gemaakt en zijn we ernaar overgeschakeld. We kunnen het probleem veilig oplossen zonder de andere branches te storen.
+
+Laten we onze denkbeeldige fout oplossen:
+
+### Voorbeeld
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello World!</title>
+<link rel="stylesheet" href="bluestyle.css">
+</head>
+<body>
+
+<h1>Hello world!</h1>
+<p>This is the first file in my new Git Repo.</p>
+<p>This line is here to show how merging works.</p>
+
+</body>
+</html>
+```
+
+We hebben wijzigingen aangebracht in dit bestand en we moeten die wijzigingen naar de `master` branch krijgen.
+
+Controleer de status:
+
+### Voorbeeld
+
+```sh
+git status
+```
+
+```
+On branch emergency-fix
+Changes not staged for commit:
+  (use "git add ..." to update what will be committed)
+  (use "git restore ..." to discard changes in working directory)
+        modified:   index.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Stage het bestand en commit:
+
+### Voorbeeld
+
+```sh
+git add index.html
+git commit -m "updated index.html with emergency fix"
+```
+
+```
+[emergency-fix dfa79db] updated index.html with emergency fix
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Nu hebben we een oplossing
