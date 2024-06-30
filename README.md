@@ -296,6 +296,7 @@ Nu checken we de status van de repository. Maar dit keer gebruiken we de --short
 git status --short
 ```
 
+#### Output
 ```
 M index.html
 ```
@@ -317,3 +318,5 @@ git commit -a -m "Updated index.html with a new line"
 [master 09f4acd] Updated index.html with a new line
  1 file changed, 1 insertion(+)
  ```
+
+ 
