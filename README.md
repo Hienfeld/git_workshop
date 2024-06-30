@@ -161,18 +161,6 @@ Controleer de status:
 git status
 ```
 
-Stage het bestand:
-
-```sh
-git add index.html
-```
-
-Commit het bestand:
-
-```sh
-git commit -m "First release of Hello World!"
-```
-
 ### Git Hulp
 
 Als je hulp nodig hebt met Git-commando's:
@@ -181,46 +169,123 @@ Als je hulp nodig hebt met Git-commando's:
 git command -help
 ```
 
-## Werken met Git Branches
+## Git Staging Environment
 
-Maak een nieuwe branch:
+### Git Staging Environment
+
+Een van de kernfuncties van Git is het concept van de Staging Environment en de Commit.
+
+Terwijl je werkt, kun je bestanden toevoegen, bewerken en verwijderen. Maar telkens wanneer je een mijlpaal bereikt of een deel van het werk voltooit, moet je de bestanden toevoegen aan een Staging Environment.
+
+Gestage bestanden zijn bestanden die klaar zijn om te worden gecommit naar de repository waaraan je werkt. Je leert straks meer over commit.
+
+Voor nu zijn we klaar met werken aan index.html. Dus we kunnen het toevoegen aan de Staging Environment:
+
+### Voorbeeld
 
 ```sh
-git branch hello-world-images
+git add index.html
 ```
 
-Schakel over naar de nieuwe branch:
+Het bestand zou nu gestaged moeten zijn. Laten we de status controleren:
+
+### Voorbeeld
 
 ```sh
-git checkout hello-world-images
+git status
 ```
 
-Voeg wijzigingen toe en commit deze naar de branch:
+```
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached ..." to unstage)
+    new file: index.html
+```
+
+Nu is het bestand toegevoegd aan de Staging Environment.
+
+### Meer dan één bestand toevoegen
+
+Je kunt ook meer dan één bestand tegelijk stagen. Laten we nog 2 bestanden toevoegen aan onze werkmap. Gebruik opnieuw de teksteditor.
+
+Een README.md-bestand dat de repository beschrijft (aanbevolen voor alle repositories):
+
+### Voorbeeld
+
+```
+# hello-world
+Hello World repository for Git tutorial
+This is an example repository for the Git tutorial on https://www.w3schools.com
+
+This repository is built step by step in the tutorial.
+```
+
+Een basis externe stijlblad (bluestyle.css):
+
+### Voorbeeld
+
+```css
+body {
+  background-color: lightblue;
+}
+
+h1 {
+  color: navy;
+  margin-left: 20px;
+}
+```
+
+En update index.html om het stylesheet op te nemen:
+
+### Voorbeeld
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello World!</title>
+<link rel="stylesheet" href="bluestyle.css">
+</head>
+<body>
+
+<h1>Hello world!</h1>
+<p>This is the first file in my new Git Repo.</p>
+
+</body>
+</html>
+```
+
+Voeg nu alle bestanden in de huidige directory toe aan de Staging Environment:
+
+### Voorbeeld
 
 ```sh
 git add --all
-git commit -m "Added image to Hello World"
 ```
 
-### Branches Samenvoegen
+Door `--all` te gebruiken in plaats van individuele bestandsnamen, worden alle wijzigingen (nieuwe, gewijzigde en verwijderde bestanden) gestaged.
 
-Schakel terug naar master en voeg branches samen:
+### Voorbeeld
 
 ```sh
-git checkout master
-git merge hello-world-images
+git status
 ```
 
-Los eventuele merge-conflicten op en commit de wijzigingen:
+```
+On branch master
 
-```sh
-git commit -m "merged with hello-world-images after fixing conflicts"
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached ..." to unstage)
+        new file:   README.md
+        new file:   bluestyle.css
+        new file:   index.html
 ```
 
-Verwijder de samengevoegde branch:
+Nu zijn alle 3 bestanden toegevoegd aan de Staging Environment en we zijn klaar om onze eerste commit te doen.
 
-```sh
-git branch -d hello-world-images
-```
-
-Nu je een beter begrip hebt van hoe branches en samenvoegen werken, is het tijd om te beginnen met werken met een externe repository!
+Opmerking: De verkorte opdracht voor `git add --all` is `git add -A`
