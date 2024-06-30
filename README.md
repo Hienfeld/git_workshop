@@ -289,3 +289,31 @@ Changes to be committed:
 Nu zijn alle 3 bestanden toegevoegd aan de Staging Environment en we zijn klaar om onze eerste commit te doen.
 
 Opmerking: De verkorte opdracht voor `git add --all` is `git add -A`
+
+Nu checken we de status van de repository. Maar dit keer gebruiken we de --short optie om de changes compact weer te geven:
+
+```sh
+git status --short
+```
+
+```
+M index.html
+```
+
+Note: Short status flags are:
+
+?? - Untracked files
+A - Files added to stage
+M - Modified files
+D - Deleted files
+We see the file we expected is modified. So let's commit it directly:
+
+Een laatste shotcut die we laten zien is om direct een commit te doen, zonder eerst te stages. Dit is niet gebruikelijk, maar kan wel.
+
+```sh
+git commit -a -m "Updated index.html with a new line"
+```
+```
+[master 09f4acd] Updated index.html with a new line
+ 1 file changed, 1 insertion(+)
+ ```
