@@ -740,6 +740,53 @@ git branch -d emergency-fix
 Deleted branch emergency-fix (was dfa79db).
 ```
 
+## Git Branch Merge
+
+### Branches Samenvoegen
+
+We hebben de noodfix klaar, dus laten we de `master` en `emergency-fix` branches samenvoegen.
+
+Eerst moeten we overschakelen naar de `master` branch:
+
+#### Voorbeeld
+
+```sh
+git checkout master
+```
+
+```
+Switched to branch 'master'
+```
+
+Nu voegen we de huidige branch (`master`) samen met `emergency-fix`:
+
+#### Voorbeeld
+
+```sh
+git merge emergency-fix
+```
+
+```
+Updating 09f4acd..dfa79db
+Fast-forward
+ index.html | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Omdat de `emergency-fix` branch direct van `master` kwam, en er geen andere wijzigingen waren aangebracht in `master` terwijl we aan het werk waren, ziet Git dit als een voortzetting van `master`. Dus het kan "Fast-forward", waarbij zowel `master` als `emergency-fix` naar dezelfde commit wijzen.
+
+Omdat `master` en `emergency-fix` in wezen hetzelfde zijn nu, kunnen we `emergency-fix` verwijderen, aangezien deze niet langer nodig is:
+
+#### Voorbeeld
+
+```sh
+git branch -d emergency-fix
+```
+
+```
+Deleted branch emergency-fix (was dfa79db).
+```
+
 ### Merge Conflict
 
 Nu kunnen we teruggaan naar `hello-world-images` en verder werken. Voeg nog een afbeeldingsbestand toe (`img_hello_git.jpg`) en wijzig `index.html`, zodat het deze weergeeft:
@@ -766,10 +813,11 @@ Switched to branch 'hello-world-images'
 <body>
 
 <h1>Hello world!</h1>
-<div><img src="img_hello_world.jpg" alt="Hello World from Space" style="width:100%;max-width:960px"></div>
+<div class="image-container">
+    <img src="hello_world.webp" alt="Hello World">
+</div>
 <p>This is the first file in my new Git Repo.</p>
-<p>A new line in our file!</p>
-<div><img src="img_hello_git.jpg" alt="Hello Git" style="width:100%;max-width:640px"></div>
+
 
 </body>
 </html>
@@ -844,13 +892,15 @@ Dus we moeten dat conflict oplossen. Open het bestand in onze editor:
 <body>
 
 <h1>Hello world!</h1>
-<div><img src="img_hello_world.jpg" alt="Hello World from Space" style="width:100%;max-width:960px"></div>
-<p>This is the first file in my new Git Repo.</p>
 <<<<<<< HEAD
+<p>This is the first file in my new Git Repo.</p>
 <p>This line is here to show how merging works.</p>
 =======
-<p>A new line in our file!</p>
-<div><img src="img_hello_git.jpg" alt="Hello Git" style="width:100%;max-width:640px"></div>
+<div class="image-container">
+    <img src="hello_world.webp" alt="Hello World">
+</div>
+<p>This is the first file in my new Git Repo.</p>
+
 >>>>>>> hello-world-images
 
 </body>
@@ -871,10 +921,15 @@ We kunnen de verschillen tussen de versies zien en deze bewerken zoals we willen
 <body>
 
 <h1>Hello world!</h1>
-<div><img src="img_hello_world.jpg" alt="Hello World from Space" style="width:100%;max-width:960px"></div>
+
 <p>This is the first file in my new Git Repo.</p>
 <p>This line is here to show how merging works.</p>
-<div><img src="img_hello_git.jpg" alt="Hello Git" style="width:100%;max-width:640px"></div>
+
+<div class="image-container">
+    <img src="hello_world.webp" alt="Hello World">
+</div>
+<p>This is the first file in my new Git Repo.</p>
+
 
 </body>
 </html>
@@ -925,4 +980,3 @@ Deleted branch hello-world-images (was 1f1584e).
 ```
 
 Nu heb je een beter begrip van hoe branches en merges werken. Tijd om te beginnen met werken met een externe repository!
-
