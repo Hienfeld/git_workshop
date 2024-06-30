@@ -980,3 +980,229 @@ Deleted branch hello-world-images (was 1f1584e).
 ```
 
 Nu heb je een beter begrip van hoe branches en merges werken. Tijd om te beginnen met werken met een externe repository!
+
+
+## Werken met Externe Repositories
+
+In deze sectie bespreken we hoe je Git kunt gebruiken met externe repositories, zoals GitHub.
+
+### Verander Platform:
+Schakel focus naar:
+- GitHub
+- Bitbucket
+- GitLab
+
+### Een Externe Repository Koppelen
+
+Ga nu naar Github. Maak een account en log hierop in.
+
+Maak een nieuwe Repo zonder inhoud.
+
+Om een lokale repository te koppelen aan een externe repository, gebruik je het volgende commando:
+
+### Voorbeeld
+
+```sh
+git remote add origin https://github.com/gebruikersnaam/repositorynaam.git
+```
+
+Dit commando stelt je in staat om de lokale repository te verbinden met een externe repository op GitHub.
+
+### Voorbeeld
+
+```sh
+git remote -v
+```
+
+Dit commando toont de gekoppelde externe repositories en hun URL's.
+
+### De Eerste Push
+
+Om je lokale wijzigingen naar de externe repository te pushen, gebruik je:
+
+### Voorbeeld
+
+```sh
+git push -u origin master
+```
+
+Dit commando push alle gecommitte wijzigingen naar de `master` branch van de `origin` repository.
+
+Krijg je een error? Mooi ga dan naar de ssh_config_windows.md. Hierin staat beschreven hoe je een ssh verbinding opzet met github om zo veilig `git push` en `git pull` commando's uit te voeren.
+
+Nu heb je je lokale repository succesvol gekoppeld en je eerste push naar een externe repository uitgevoerd.
+
+
+## Git Pull van GitHub
+
+### Verander Platform:
+Schakel focus naar:
+- GitHub
+- Bitbucket
+- GitLab
+
+### Up-to-date Blijven met Wijzigingen
+Wanneer je in een team aan een project werkt, is het belangrijk dat iedereen up-to-date blijft.
+
+Elke keer dat je begint te werken aan een project, moet je de meest recente wijzigingen naar je lokale kopie halen.
+
+Met Git kun je dat doen met `pull`.
+
+`pull` is een combinatie van 2 verschillende commando's:
+
+- `fetch`
+- `merge`
+
+Laten we eens nader bekijken hoe `fetch`, `merge` en `pull` werken.
+
+### Git Fetch
+`fetch` haalt alle wijzigingsgeschiedenis van een getrackte branch/repo op.
+
+Dus, op je lokale Git, gebruik `fetch` om te zien wat er is veranderd op GitHub:
+
+### Voorbeeld
+
+```sh
+git fetch origin
+```
+
+```
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 733 bytes | 3.00 KiB/s, done.
+From https://github.com/w3schools-test/hello-world
+   e0b6038..d29d69f  master     -> origin/master
+```
+
+Nu we de recente wijzigingen hebben, kunnen we onze status controleren:
+
+### Voorbeeld
+
+```sh
+git status
+```
+
+```
+On branch master
+Your branch is behind 'origin/master' by 1 commit, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+nothing to commit, working tree clean
+```
+
+We lopen 1 commit achter op `origin/master`. Dat zou de bijgewerkte `README.md` moeten zijn, maar laten we het dubbelchecken door de log te bekijken:
+
+### Voorbeeld
+
+```sh
+git log origin/master
+```
+
+```
+commit d29d69ffe2ee9e6df6fa0d313bb0592b50f3b853 (origin/master)
+Author: w3schools-test <77673807+w3schools-test@users.noreply.github.com>
+Date:   Fri Mar 26 14:59:14 2021 +0100
+
+    Updated README.md with a line about GitHub
+
+commit e0b6038b1345e50aca8885d8fd322fc0e5765c3b (HEAD -> master)
+Merge: dfa79db 1f1584e
+Author: w3schools-test 
+Date:   Fri Mar 26 12:42:56 2021 +0100
+
+    merged with hello-world-images after fixing conflicts
+```
+
+Dat ziet er naar verwachting uit, maar we kunnen het ook verifiëren door de verschillen tussen onze lokale `master` en `origin/master` te tonen:
+
+### Voorbeeld
+
+```sh
+git diff origin/master
+```
+
+```
+diff --git a/README.md b/README.md
+index 23a0122..a980c39 100644
+--- a/README.md
++++ b/README.md
+@@ -2,6 +2,4 @@
+ Hello World repository for Git tutorial
+ This is an example repository for the Git tutoial on https://www.w3schools.com
+
+-This repository is built step by step in the tutorial.
+-
+-It now includes steps for GitHub
++This repository is built step by step in the tutorial.
+\ No newline at end of file
+```
+
+Dat ziet er precies uit zoals verwacht! Nu kunnen we veilig mergen.
+
+### Git Merge
+`merge` combineert de huidige branch met een opgegeven branch.
+
+We hebben bevestigd dat de updates naar verwachting zijn, en we kunnen onze huidige branch (`master`) mergen met `origin/master`:
+
+### Voorbeeld
+
+```sh
+git merge origin/master
+```
+
+```
+Updating e0b6038..d29d69f
+Fast-forward
+ README.md | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+```
+
+Controleer onze status opnieuw om te bevestigen dat we up-to-date zijn:
+
+### Voorbeeld
+
+```sh
+git status
+```
+
+```
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+```
+
+Klaar! Je lokale Git is up-to-date!
+
+### Git Pull
+Maar wat als je gewoon je lokale repository wilt bijwerken, zonder al deze stappen door te lopen?
+
+`pull` is een combinatie van `fetch` en `merge`. Het wordt gebruikt om alle wijzigingen van een remote repository naar de branch waar je aan werkt te halen.
+
+Maak een andere wijziging aan het `Readme.md` bestand op GitHub.
+
+Gebruik `pull` om onze lokale Git bij te werken:
+
+### Voorbeeld
+
+```sh
+git pull origin
+```
+
+```
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 794 bytes | 1024 bytes/s, done.
+From https://github.com/w3schools-test/hello-world
+   a7cdd4b..ab6b4ed  master       -> origin/master
+Updating a7cdd4b..ab6b4ed
+Fast-forward
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)
+```
+
+Zo houd je je lokale Git up-to-date met een remote repository. In het volgende hoofdstuk zullen we nader bekijken hoe `push` werkt op GitHub.
