@@ -427,7 +427,7 @@ Nu hebben we onze huidige werkruimte verplaatst van de `master` branch naar de n
 
 Open je favoriete editor en maak wat wijzigingen.
 
-Voor dit voorbeeld hebben we een afbeelding (`img_hello_world.jpg`) toegevoegd aan de werkmap en een regel code in het `index.html` bestand:
+Voor dit voorbeeld hebben we een afbeelding (`hello_world.webp`) toegevoegd aan de werkmap en een regel code in het `index.html` bestand:
 
 #### Voorbeeld
 
@@ -441,12 +441,58 @@ Voor dit voorbeeld hebben we een afbeelding (`img_hello_world.jpg`) toegevoegd a
 <body>
 
 <h1>Hello world!</h1>
-<div><img src="img_hello_world.jpg" alt="Hello World from Space" style="width:100%;max-width:960px"></div>
 <p>This is the first file in my new Git Repo.</p>
-<p>A new line in our file!</p>
+
+<div class="image-container">
+    <img src="hello_world.webp" alt="Hello World">
+</div>
 
 </body>
 </html>
+```
+
+En voor de styling een nieuw css bestand voor bluestyle.css
+
+```css
+body {
+    background-color: #f0f8ff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #333;
+}
+
+h1 {
+    color: #004080;
+    margin: 0;
+    font-size: 3em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #666;
+    margin: 10px 0 20px;
+    text-align: center;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.image-container img {
+    width: 100%;
+    max-width: 960px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 ```
 
 We hebben wijzigingen aangebracht in een bestand en een nieuw bestand toegevoegd in de werkmap (dezelfde map als de hoofdbranch).
@@ -464,19 +510,20 @@ On branch hello-world-images
 Changes not staged for commit:
   (use "git add ..." to update what will be committed)
   (use "git restore ..." to discard changes in working directory)
+        modified:   bluestyle.css
         modified:   index.html
 
 Untracked files:
   (use "git add ..." to include in what will be committed)
-        img_hello_world.jpg
+        hello_world.webp
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
 Laten we eens kijken wat hier gebeurt:
 
-- Er zijn wijzigingen in onze `index.html`, maar het bestand is niet gestaged voor commit
-- `img_hello_world.jpg` is niet getrackt
+- Er zijn wijzigingen in onze `index.html` en `bleustyle.css`, maar de bestanden zijn niet gestaged voor commit
+- `hello_world.webp` is niet getrackt
 
 Dus we moeten beide bestanden toevoegen aan de Staging Environment voor deze branch:
 
